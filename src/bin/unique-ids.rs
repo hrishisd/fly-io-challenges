@@ -1,3 +1,5 @@
+use std::fmt::format;
+
 // cargo b && ../maelstrom/maelstrom test -w unique-ids --bin target/debug/unique-ids --time-limit 30 --rate 1000 --node-count 3 --availability total --nemesis partition
 use anyhow::anyhow;
 
@@ -16,13 +18,12 @@ impl Node for UniqueIdNode {
     fn handle(&mut self, msg: Message) -> anyhow::Result<()> {
         match msg.body {
             Body::Generate { msg_id } => {
-                let id = uuid::Uuid::new_v4().to_string();
+                let id = format!("{}:{}", self.id, self.msg_count);
                 let response = Message {
                     src: self.id.clone(),
                     dest: msg.src,
                     body: Body::GenerateOk {
                         id,
-                        msg_id: self.msg_count,
                         in_reply_to: msg_id,
                     },
                 };

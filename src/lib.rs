@@ -34,7 +34,6 @@ pub enum Body {
         msg_id: usize,
     },
     GenerateOk {
-        msg_id: usize,
         in_reply_to: usize,
         id: String,
     },
