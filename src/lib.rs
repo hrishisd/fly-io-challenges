@@ -30,6 +30,14 @@ pub enum Body {
         in_reply_to: usize,
         echo: String,
     },
+    Generate {
+        msg_id: usize,
+    },
+    GenerateOk {
+        msg_id: usize,
+        in_reply_to: usize,
+        id: String,
+    },
 }
 
 pub trait Node {

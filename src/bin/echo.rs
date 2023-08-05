@@ -1,5 +1,5 @@
+// cargo b && ../maelstrom/maelstrom test -w echo --bin target/debug/echo --node-count 1 --time-limit 10
 use anyhow::anyhow;
-use std::io::{self};
 
 use maelstrom_echo::{Body, Message, Node};
 
@@ -33,10 +33,5 @@ impl Node for EchoNode {
 
 fn main() -> anyhow::Result<()> {
     let mut node = EchoNode::initialize()?;
-    for msg in io::stdin().lines() {
-        let line = msg?;
-        let msg: Message = serde_json::from_str(&line)?;
-        node.handle(msg)?;
-    }
-    Ok(())
+    node.run()
 }
