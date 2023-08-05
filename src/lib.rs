@@ -1,6 +1,9 @@
 use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
-use std::io::{self, Write};
+use std::{
+    collections::HashMap,
+    io::{self, Write},
+};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Message {
@@ -36,6 +39,27 @@ pub enum Body {
     GenerateOk {
         in_reply_to: usize,
         id: String,
+    },
+    Broadcast {
+        msg_id: usize,
+        message: usize,
+    },
+    BroadcastOk {
+        in_reply_to: usize,
+    },
+    Read {
+        msg_id: usize,
+    },
+    ReadOk {
+        in_reply_to: usize,
+        messages: Vec<usize>,
+    },
+    Topology {
+        msg_id: usize,
+        topology: HashMap<String, Vec<String>>,
+    },
+    TopologyOk {
+        in_reply_to: usize,
     },
 }
 
